@@ -36,7 +36,7 @@
 
             php artisan db:seed 
 
-* Run:
+* Run the app:
 
             php artisan serve
 
