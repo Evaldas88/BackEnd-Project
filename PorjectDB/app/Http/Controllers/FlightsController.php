@@ -8,9 +8,14 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 class FlightsController extends Controller
 {
- 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
+
         return Flights::all();
     }
 
@@ -28,10 +33,10 @@ class FlightsController extends Controller
     }
 
 
-    public function show($id)
+    public function show($id, Request $request)
     {
 
-        $flight = Flights::where('id', $id);
+        $flight = Passenger::where('id', $id);
 
         if ($flight->get())
             return response()->json([
@@ -46,13 +51,18 @@ class FlightsController extends Controller
     }
 
 
-  
+    public function edit($id, Request $request) {
+        Passenger::find($id)->update($request->all());
+        return 'Post successfully updated.';
+    }
 
-    public function update(Request $request, $id)
+
+    public function update(Request $request, $id )
     {
-        $flight = Flights::find($id);
-        $flight->fill($request->all());
-        if($flight -> save()){
+        $passenger = Flights::find($id);
+        $passenger->fill($request->all());
+
+        if($passenger -> save()){
             return response()->json(["status" => 200]);
         }
 
@@ -60,7 +70,7 @@ class FlightsController extends Controller
 
     public function destroy($id){
 
-        return ( Flights::destroy($id) == 1) ?
+        return (\App\Models\Flights::destroy($id) == 1) ?
             response()->json(['success' => 'success'], 204) :
             response()->json(['error' => 'delete not successful'], 500);
 
