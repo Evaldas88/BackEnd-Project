@@ -23,7 +23,7 @@ class FlightsController extends Controller
 
         ]);
         if($destination){
-            return response()->json(["status" => 200]);
+            return 'Destination successfully created';
         }
     }
 
@@ -53,16 +53,16 @@ class FlightsController extends Controller
         $flight = Flights::find($id);
         $flight->fill($request->all());
         if($flight -> save()){
-            return response()->json(["status" => 200]);
+            return 'All info  successfully created';
         }
 
     }
 
     public function destroy($id){
-
-        return ( Flights::destroy($id) == 1) ?
-            response()->json(['success' => 'success'], 204) :
-            response()->json(['error' => 'delete not successful'], 500);
-
+        $flight = Flights::find($id);
+        $flight->destroy($id);
+    
+            return 'All info  successfully deleted';
+        
 }
 }
